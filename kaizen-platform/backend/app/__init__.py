@@ -1,0 +1,2 @@
+"""Kaizen Life API."""
+

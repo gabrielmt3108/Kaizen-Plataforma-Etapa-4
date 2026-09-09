@@ -1,0 +1,22 @@
+{
+  "name": "kaizen-life-mobile",
+  "private": true,
+  "version": "0.3.0",
+  "scripts": {
+    "sync": "cap sync",
+    "android": "cap open android",
+    "ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor-community/fcm": "^7.0.0",
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/app": "^7.1.0",
+    "@capacitor/browser": "^7.0.2",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/ios": "^7.4.3",
+    "@capacitor/push-notifications": "^7.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  }
+}

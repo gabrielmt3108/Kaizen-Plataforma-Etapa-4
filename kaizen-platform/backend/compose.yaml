@@ -1,0 +1,58 @@
+services:
+  web:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ../frontend:/usr/share/nginx/html:ro
+      - ../deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: kaizen
+      POSTGRES_USER: kaizen
+      POSTGRES_PASSWORD: kaizen-local
+    ports:
+      - "5432:5432"
+    volumes:
+      - kaizen_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kaizen -d kaizen"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    env_file: .env
+    environment:
+      KAIZEN_DATABASE_URL: postgresql+asyncpg://kaizen:kaizen-local@db:5432/kaizen
+      KAIZEN_AUTO_CREATE_TABLES: "true"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./secrets:/run/secrets:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  notifications-worker:
+    build: .
+    command: ["python", "-m", "app.worker"]
+    env_file: .env
+    environment:
+      KAIZEN_DATABASE_URL: postgresql+asyncpg://kaizen:kaizen-local@db:5432/kaizen
+      KAIZEN_AUTO_CREATE_TABLES: "false"
+    volumes:
+      - ./secrets:/run/secrets:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      api:
+        condition: service_started
+
+volumes:
+  kaizen_postgres:

@@ -1,0 +1,2 @@
+"""Configuração e segurança compartilhadas."""
+

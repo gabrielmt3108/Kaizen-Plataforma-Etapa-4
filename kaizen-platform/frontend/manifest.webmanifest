@@ -1,0 +1,27 @@
+{
+  "name": "Kaizen Life",
+  "short_name": "Kaizen",
+  "description": "Foco, hábitos, metas e tarefas com melhoria contínua.",
+  "lang": "pt-BR",
+  "start_url": "./Kaizen-Life-Foco.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0B0F19",
+  "theme_color": "#7C3AED",
+  "categories": ["productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "./kaizen-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./kaizen-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

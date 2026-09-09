@@ -1,0 +1,19 @@
+{
+  "appId": "com.kaizenlife.app",
+  "appName": "Kaizen Life",
+  "webDir": "../frontend",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    },
+    "CapacitorCookies": {
+      "enabled": true
+    },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  }
+}

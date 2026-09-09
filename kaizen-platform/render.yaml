@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: kaizen-life-api
+    runtime: python
+    plan: free
+    region: virginia
+    rootDir: backend
+    buildCommand: pip install .
+    startCommand: >-
+      alembic upgrade head &&
+      uvicorn app.main:app --host 0.0.0.0 --port $PORT
+      --proxy-headers --forwarded-allow-ips=*
+    healthCheckPath: /api/v1/ready
+    autoDeployTrigger: commit
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: KAIZEN_ENVIRONMENT
+        value: production
+      - key: KAIZEN_DEBUG
+        value: "false"
+      - key: KAIZEN_COOKIE_SECURE
+        value: "true"
+      - key: KAIZEN_AUTO_CREATE_TABLES
+        value: "false"
+      - key: KAIZEN_DATABASE_POOL_SIZE
+        value: "5"
+      - key: KAIZEN_DATABASE_MAX_OVERFLOW
+        value: "5"
+      - key: KAIZEN_DATABASE_URL
+        sync: false
+      - key: KAIZEN_JWT_SECRET
+        generateValue: true
+      - key: KAIZEN_CORS_ORIGINS
+        sync: false
+      - key: KAIZEN_OAUTH_RETURN_ORIGINS
+        sync: false
+      - key: KAIZEN_EMAIL_DELIVERY_MODE
+        value: brevo
+      - key: KAIZEN_BREVO_API_KEY
+        sync: false
+      - key: KAIZEN_EMAIL_FROM_EMAIL
+        sync: false
+      - key: KAIZEN_EMAIL_FROM_NAME
+        value: Kaizen Life
+      - key: KAIZEN_SMS_DELIVERY_MODE
+        value: disabled
+      - key: KAIZEN_GOOGLE_OAUTH_ENABLED
+        value: "false"
+      - key: KAIZEN_WEB_PUSH_ENABLED
+        value: "false"
+      - key: KAIZEN_NOTIFICATION_CRON_ENABLED
+        value: "true"
+      - key: KAIZEN_CRON_SECRET
+        sync: false
+      - key: KAIZEN_NOTIFICATION_WORKER_INTERVAL_SECONDS
+        value: "600"
